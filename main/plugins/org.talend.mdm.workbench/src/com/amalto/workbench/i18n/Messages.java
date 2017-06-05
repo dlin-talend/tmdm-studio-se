@@ -1611,16 +1611,6 @@ public class Messages extends NLS {
 
     public static String XSDEditFacetAction_ValueMustBeXX;
 
-    public static String XSDEditIdentityXX_EditAKey;
-
-    public static String XSDEditIdentityXX_EditKey;
-
-    public static String XSDEditIdentityXX_EnterANameForKey;
-
-    public static String XSDEditIdentityXX_ErrorEditEntity;
-
-    public static String XSDEditIdentityXX_WarningMsg;
-
     public static String XSDEditor_ChangedPageErrorTitle;
 
     public static String XSDEditor_ErrorMessage;

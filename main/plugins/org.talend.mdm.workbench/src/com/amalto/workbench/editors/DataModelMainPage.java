@@ -169,7 +169,6 @@ import com.amalto.workbench.actions.XSDEditComplexTypeAction;
 import com.amalto.workbench.actions.XSDEditConceptAction;
 import com.amalto.workbench.actions.XSDEditElementAction;
 import com.amalto.workbench.actions.XSDEditFacetAction;
-import com.amalto.workbench.actions.XSDEditIdentityConstraintAction;
 import com.amalto.workbench.actions.XSDEditParticleAction;
 import com.amalto.workbench.actions.XSDEditXPathAction;
 import com.amalto.workbench.actions.XSDGetXPathAction;
@@ -279,8 +278,6 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
     private XSDEditElementAction editElementAction = null;
 
     private XSDDeleteIdentityConstraintAction deleteIdentityConstraintAction = null;
-
-    private XSDEditIdentityConstraintAction editIdentityConstraintAction = null;
 
     private XSDNewIdentityConstraintAction newIdentityConstraintAction = null;
 
@@ -445,8 +442,8 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
             Composite descriptionComposite = toolkit.createComposite(mainComposite, SWT.NONE);
             descriptionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
             descriptionComposite.setLayout(new GridLayout());
-            desAntionComposite = new DescAnnotationComposite(Messages.DescriptionText,
-                    " ...", toolkit, descriptionComposite, null, //$NON-NLS-1$
+            desAntionComposite = new DescAnnotationComposite(Messages.DescriptionText, " ...", toolkit, descriptionComposite, //$NON-NLS-1$
+                    null,
                     false);
             desAntionComposite.setText(wsObject.getDescription() == null ? "" : wsObject.getDescription());//$NON-NLS-1$
             desAntionComposite.getTextWidget().addModifyListener(new ModifyListener() {
@@ -755,8 +752,8 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
         schemaTreeContentProvider = new SchemaTreeContentProvider(this.getSite(), xsdSchema);
         viewer.setContentProvider(schemaTreeContentProvider);
 
-        viewer.setFilters(new ViewerFilter[] { new SchemaRoleAccessFilter(null), new SchemaNameFilter(),
-                new SchemaUniqueElementFilter() });
+        viewer.setFilters(
+                new ViewerFilter[] { new SchemaRoleAccessFilter(null), new SchemaNameFilter(), new SchemaUniqueElementFilter() });
 
         viewer.getTree().addMouseListener(new MouseAdapter() {
 
@@ -1069,8 +1066,8 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
     }
 
     protected void doSave(WSDataModel wsObject) throws Exception {
-        TMDMService port = Util
-                .getMDMService(new URL(xobject.getEndpointAddress()), xobject.getUsername(), xobject.getPassword());
+        TMDMService port = Util.getMDMService(new URL(xobject.getEndpointAddress()), xobject.getUsername(),
+                xobject.getPassword());
         port.putDataModel(new WSPutDataModel(wsObject));
         if (exAdapter != null) {
             exAdapter.doSave(port, wsObject.getName(), Messages.DataModelText);
@@ -1101,7 +1098,6 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
         this.editConceptAction = new XSDEditConceptAction(this);
         this.editElementAction = new XSDEditElementAction(this);
         this.deleteIdentityConstraintAction = new XSDDeleteIdentityConstraintAction(this);
-        this.editIdentityConstraintAction = new XSDEditIdentityConstraintAction(this);
         this.newIdentityConstraintAction = new XSDNewIdentityConstraintAction(this);
         this.deleteXPathAction = new XSDDeleteXPathAction(this);
         this.newXPathAction = new XSDNewXPathAction(this);
@@ -1111,11 +1107,13 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
         this.getXPathAction = new XSDGetXPathAction(this);
         this.setAnnotationLabelAction = new XSDSetAnnotationLabelAction(this);
         this.setAnnotationDescriptionsAction = new XSDSetAnnotationDescriptionsAction(this);
-        this.setAnnotationForeignKeyAction = (XSDSetAnnotationForeignKeyAction) getAdapter(XSDSetAnnotationForeignKeyAction.class);
+        this.setAnnotationForeignKeyAction = (XSDSetAnnotationForeignKeyAction) getAdapter(
+                XSDSetAnnotationForeignKeyAction.class);
         this.skipToFKAction = new XSDSkipToFKAction(this);
 
         this.setAnnotationFKFilterAction = (XSDSetAnnotationFKFilterAction) getAdapter(XSDSetAnnotationFKFilterAction.class);
-        this.setAnnotationForeignKeyInfoAction = (XSDSetAnnotationForeignKeyInfoAction) getAdapter(XSDSetAnnotationForeignKeyInfoAction.class);
+        this.setAnnotationForeignKeyInfoAction = (XSDSetAnnotationForeignKeyInfoAction) getAdapter(
+                XSDSetAnnotationForeignKeyInfoAction.class);
 
         this.setAnnotationDisplayFomatAction = new XSDSetAnnotaionDisplayFormatAction(this);
         this.setAnnotationLookupFieldsAction = new XSDAnnotationLookupFieldsAction(this);
@@ -1526,7 +1524,6 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
         if (obj instanceof XSDIdentityConstraintDefinition && selectedObjs.length == 1
                 && ((XSDIdentityConstraintDefinition) obj).getTargetNamespace() == null
                 && !Util.IsAImporedElement((XSDIdentityConstraintDefinition) obj, xsdSchema)) {
-            manager.add(editIdentityConstraintAction);
             manager.add(deleteIdentityConstraintAction);
             manager.add(new Separator());
             manager.add(newXPathAction);
@@ -1543,10 +1540,9 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
             }
         }
         // for the anonymous simpleType
-        if (obj instanceof XSDSimpleTypeDefinition
-                && selectedObjs.length == 1
-                && (!Util.IsAImporedElement((XSDSimpleTypeDefinition) obj, xsdSchema) || ((XSDSimpleTypeDefinition) obj)
-                        .getName() == null)) {
+        if (obj instanceof XSDSimpleTypeDefinition && selectedObjs.length == 1
+                && (!Util.IsAImporedElement((XSDSimpleTypeDefinition) obj, xsdSchema)
+                        || ((XSDSimpleTypeDefinition) obj).getName() == null)) {
             XSDSimpleTypeDefinition typedef = (XSDSimpleTypeDefinition) obj;
 
             manager.add(changeBaseTypeAction);
@@ -2024,8 +2020,8 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
                 if (dropTargetValidate(event, nameList)) {
                     if (MessageDialog.openConfirm(sash.getShell(), Messages.ConfirmText, Messages.DoIncludeImportSchema)) {
                         try {
-                            HashMap<String, String> customTypesMap = ResourcesUtil.getResourcesMapFromURI(uriPre
-                                    + TreeObject.CUSTOM_TYPES_URI, xobject);
+                            HashMap<String, String> customTypesMap = ResourcesUtil
+                                    .getResourcesMapFromURI(uriPre + TreeObject.CUSTOM_TYPES_URI, xobject);
                             List<String> customTypeList = new ArrayList<String>();
                             for (String key : nameList) {
                                 customTypeList.add(customTypesMap.get(key));
@@ -2566,9 +2562,7 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
             case 2:
                 editComplexTypeAction.run();
                 break;
-            case 3:
-                editIdentityConstraintAction.run();
-                break;
+
             case 4:
                 editXPathAction.run();
                 break;
