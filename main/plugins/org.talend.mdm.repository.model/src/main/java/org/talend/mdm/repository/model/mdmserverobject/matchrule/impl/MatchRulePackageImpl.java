@@ -272,6 +272,15 @@ public class MatchRulePackageImpl extends EPackageImpl implements MatchRulePacka
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getEntityMapInfo_ParticularDefaultSurvivorshipColumnMap() {
+        return (EReference)entityMapInfoEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getMatchRuleMapInfoPage() {
         return matchRuleMapInfoPageEClass;
     }
@@ -441,6 +450,7 @@ public class MatchRulePackageImpl extends EPackageImpl implements MatchRulePacka
         createEAttribute(entityMapInfoEClass, ENTITY_MAP_INFO__MATCH_RULE_DEF_NAME);
         createEReference(entityMapInfoEClass, ENTITY_MAP_INFO__PARENT);
         createEReference(entityMapInfoEClass, ENTITY_MAP_INFO__MATCH_RULE_MAP_INFO_PAGES);
+        createEReference(entityMapInfoEClass, ENTITY_MAP_INFO__PARTICULAR_DEFAULT_SURVIVORSHIP_COLUMN_MAP);
 
         matchRuleMapInfoPageEClass = createEClass(MATCH_RULE_MAP_INFO_PAGE);
         createEReference(matchRuleMapInfoPageEClass, MATCH_RULE_MAP_INFO_PAGE__MATCH_KEY_MAP);
@@ -508,6 +518,7 @@ public class MatchRulePackageImpl extends EPackageImpl implements MatchRulePacka
         initEAttribute(getEntityMapInfo_MatchRuleDefName(), theEcorePackage.getEString(), "matchRuleDefName", null, 0, 1, EntityMapInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEntityMapInfo_Parent(), this.getMatchRuleMapInfo(), this.getMatchRuleMapInfo_EntityMapInfos(), "parent", null, 0, 1, EntityMapInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEntityMapInfo_MatchRuleMapInfoPages(), this.getMatchRuleMapInfoPage(), this.getMatchRuleMapInfoPage_Parent(), "matchRuleMapInfoPages", null, 0, -1, EntityMapInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEntityMapInfo_ParticularDefaultSurvivorshipColumnMap(), this.getKeyXPathMap(), null, "particularDefaultSurvivorshipColumnMap", null, 0, -1, EntityMapInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(matchRuleMapInfoPageEClass, MatchRuleMapInfoPage.class, "MatchRuleMapInfoPage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getMatchRuleMapInfoPage_MatchKeyMap(), this.getKeyXPathMap(), null, "matchKeyMap", null, 0, -1, MatchRuleMapInfoPage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

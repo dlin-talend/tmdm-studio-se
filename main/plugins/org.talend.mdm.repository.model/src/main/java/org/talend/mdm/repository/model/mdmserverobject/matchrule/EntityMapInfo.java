@@ -25,9 +25,10 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.talend.mdm.repository.model.mdmserverobject.matchrule.EntityMapInfo#getMatchRuleDefName <em>Match Rule Def Name</em>}</li>
  *   <li>{@link org.talend.mdm.repository.model.mdmserverobject.matchrule.EntityMapInfo#getParent <em>Parent</em>}</li>
  *   <li>{@link org.talend.mdm.repository.model.mdmserverobject.matchrule.EntityMapInfo#getMatchRuleMapInfoPages <em>Match Rule Map Info Pages</em>}</li>
+ *   <li>{@link org.talend.mdm.repository.model.mdmserverobject.matchrule.EntityMapInfo#getParticularDefaultSurvivorshipColumnMap <em>Particular Default Survivorship Column Map</em>}</li>
  * </ul>
  * </p>
- *
+
  * @see org.talend.mdm.repository.model.mdmserverobject.matchrule.MatchRulePackage#getEntityMapInfo()
  * @model
  * @generated
@@ -173,5 +174,22 @@ public interface EntityMapInfo extends EObject {
      * @generated
      */
     EList<MatchRuleMapInfoPage> getMatchRuleMapInfoPages();
+
+    /**
+     * Returns the value of the '<em><b>Particular Default Survivorship Column Map</b></em>' map.
+     * The key is of type {@link java.lang.String},
+     * and the value is of type {@link java.lang.String},
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Particular Default Survivorship Column Map</em>' map isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Particular Default Survivorship Column Map</em>' map.
+     * @see org.talend.mdm.repository.model.mdmserverobject.matchrule.MatchRulePackage#getEntityMapInfo_ParticularDefaultSurvivorshipColumnMap()
+     * @model mapType="org.talend.mdm.repository.model.mdmserverobject.matchrule.KeyXPathMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+     * @generated
+     */
+    EMap<String, String> getParticularDefaultSurvivorshipColumnMap();
 
 } // EntityMapInfo

@@ -203,6 +203,8 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="matchRuleMapInfoPages"
           upperBound="-1" eType="#//matchrule/MatchRuleMapInfoPage" containment="true"
           eOpposite="#//matchrule/MatchRuleMapInfoPage/parent"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="particularDefaultSurvivorshipColumnMap"
+          upperBound="-1" eType="#//matchrule/KeyXPathMap" containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MatchRuleMapInfoPage">
       <eStructuralFeatures xsi:type="ecore:EReference" name="matchKeyMap" upperBound="-1"

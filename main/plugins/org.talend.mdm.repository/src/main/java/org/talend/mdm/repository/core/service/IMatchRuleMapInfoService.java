@@ -36,6 +36,8 @@ public interface IMatchRuleMapInfoService extends IService {
 
     MatchRuleMapInfo loadMatchRuleMapInfo(Item item);
 
+    MatchRuleMapInfo loadMatchRuleMapInfo(Item item, boolean reload);
+
     List<String> getAllMatchRuleNames();
 
     List<MatchRuleDefinition> getAllMatchRules();

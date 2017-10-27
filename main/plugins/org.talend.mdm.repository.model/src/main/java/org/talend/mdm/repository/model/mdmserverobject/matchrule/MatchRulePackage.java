@@ -161,13 +161,22 @@ public interface MatchRulePackage extends EPackage {
     int ENTITY_MAP_INFO__MATCH_RULE_MAP_INFO_PAGES = 5;
 
     /**
+     * The feature id for the '<em><b>Particular Default Survivorship Column Map</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTITY_MAP_INFO__PARTICULAR_DEFAULT_SURVIVORSHIP_COLUMN_MAP = 6;
+
+    /**
      * The number of structural features of the '<em>Entity Map Info</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ENTITY_MAP_INFO_FEATURE_COUNT = 6;
+    int ENTITY_MAP_INFO_FEATURE_COUNT = 7;
 
     /**
      * The meta object id for the '{@link org.talend.mdm.repository.model.mdmserverobject.matchrule.impl.MatchRuleMapInfoPageImpl <em>Map Info Page</em>}' class.
@@ -464,6 +473,17 @@ public interface MatchRulePackage extends EPackage {
     EReference getEntityMapInfo_MatchRuleMapInfoPages();
 
     /**
+     * Returns the meta object for the map '{@link org.talend.mdm.repository.model.mdmserverobject.matchrule.EntityMapInfo#getParticularDefaultSurvivorshipColumnMap <em>Particular Default Survivorship Column Map</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the map '<em>Particular Default Survivorship Column Map</em>'.
+     * @see org.talend.mdm.repository.model.mdmserverobject.matchrule.EntityMapInfo#getParticularDefaultSurvivorshipColumnMap()
+     * @see #getEntityMapInfo()
+     * @generated
+     */
+    EReference getEntityMapInfo_ParticularDefaultSurvivorshipColumnMap();
+
+    /**
      * Returns the meta object for class '{@link org.talend.mdm.repository.model.mdmserverobject.matchrule.MatchRuleMapInfoPage <em>Map Info Page</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -730,6 +750,14 @@ public interface MatchRulePackage extends EPackage {
          * @generated
          */
         EReference ENTITY_MAP_INFO__MATCH_RULE_MAP_INFO_PAGES = eINSTANCE.getEntityMapInfo_MatchRuleMapInfoPages();
+
+        /**
+         * The meta object literal for the '<em><b>Particular Default Survivorship Column Map</b></em>' map feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ENTITY_MAP_INFO__PARTICULAR_DEFAULT_SURVIVORSHIP_COLUMN_MAP = eINSTANCE.getEntityMapInfo_ParticularDefaultSurvivorshipColumnMap();
 
         /**
          * The meta object literal for the '{@link org.talend.mdm.repository.model.mdmserverobject.matchrule.impl.MatchRuleMapInfoPageImpl <em>Map Info Page</em>}' class.
