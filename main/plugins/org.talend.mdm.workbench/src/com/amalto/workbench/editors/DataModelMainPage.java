@@ -1642,14 +1642,17 @@ public class DataModelMainPage extends EditorPart implements IGotoMarker {
             XSDTerm term = ((XSDParticle) obj).getTerm();
 
             if (term instanceof XSDElementDeclaration) {
-                String fkValue = skipToFKAction.getFKInfo((XSDElementDeclaration) term);
-                if (fkValue != null) {
-                    manager.add(skipToFKAction);
+                boolean isComplexType = ((XSDElementDeclaration) term).getTypeDefinition() instanceof XSDComplexTypeDefinition;
+                if (!isComplexType) {
+                    String fkValue = skipToFKAction.getFKInfo((XSDElementDeclaration) term);
+                    if (fkValue != null) {
+                        manager.add(skipToFKAction);
+                    }
+                    manager.add(setAnnotationForeignKeyAction);
+                    manager.add(setAnnotationFKFilterAction);
+                    manager.add(setAnnotationForeignKeyInfoAction);
                 }
             }
-            manager.add(setAnnotationForeignKeyAction);
-            manager.add(setAnnotationFKFilterAction);
-            manager.add(setAnnotationForeignKeyInfoAction);
 
         }
         if (exAdapter != null) {
