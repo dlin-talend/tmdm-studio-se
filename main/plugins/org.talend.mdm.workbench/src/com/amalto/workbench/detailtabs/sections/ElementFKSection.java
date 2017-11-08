@@ -49,6 +49,11 @@ public class ElementFKSection extends XSDComponentSection {
     }
 
     @Override
+    protected boolean isReadOnly() {
+        return super.isReadOnly() || isComplexTypeElement(curXSDComponent);
+    }
+
+    @Override
     protected void initUIContents(XSDComponent editedObj) {
         super.initUIContents(editedObj);
 

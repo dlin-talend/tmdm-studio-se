@@ -15,7 +15,10 @@ package com.amalto.workbench.detailtabs.sections;
 import org.eclipse.xsd.XSDComponent;
 import org.eclipse.xsd.XSDConcreteComponent;
 import org.eclipse.xsd.XSDElementDeclaration;
+import org.eclipse.xsd.XSDParticle;
 import org.eclipse.xsd.XSDSchema;
+
+import com.amalto.workbench.utils.XSDUtil;
 
 public abstract class XSDComponentSection extends CommitBarListenerSection<XSDComponent> {
 
@@ -43,5 +46,13 @@ public abstract class XSDComponentSection extends CommitBarListenerSection<XSDCo
     	}else{
     		return getEntity(com.getContainer());
     	}
+    }
+
+    protected boolean isComplexTypeElement(XSDComponent component) {
+        if (component instanceof XSDParticle) {
+            return !XSDUtil.isSimpleTypeElement((XSDParticle) component);
+        }
+
+        return false;
     }
 }

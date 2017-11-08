@@ -38,12 +38,19 @@ public class ElementFKFilterSection extends XSDComponentSection {
     }
 
     @Override
+    protected boolean isReadOnly() {
+        return super.isReadOnly() || isComplexTypeElement(curXSDComponent);
+    }
+
+    @Override
     protected void initUIContents(XSDComponent editedObj) {
         super.initUIContents(editedObj);
 
         filterExpression = new XSDAnnotationsStructure(curXSDComponent).getFKFilter();
         if (filterExpression == null)
+        {
             filterExpression = "";//$NON-NLS-1$
+        }
 
         dataModelHolder.setDefaultDataModel(getDataModelName());
         dataModelHolder.setDefaultEntity(getEntityName());
