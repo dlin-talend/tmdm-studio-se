@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -15,6 +15,7 @@ package org.talend.mdm.repository.ui.wizards.view;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
@@ -133,7 +134,7 @@ public class AddBrowseItemsWizardR extends AddBrowseItemsWizard {
             view.setName(viewName);
             // description
             StringBuffer desc = new StringBuffer();
-            LinkedHashMap<String, String> labels = new LinkedHashMap<String, String>();
+            Map<String, String> labels = new LinkedHashMap<String, String>();
             XSDElementDeclaration decl = getXSDElementDeclaration();
 
             if (decl.getAnnotation() != null) {

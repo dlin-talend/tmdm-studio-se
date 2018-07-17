@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -628,6 +628,12 @@ public class Messages extends NLS {
 
     public static String MenuInteractiveHandler_label;
 
+    public static String MessageType_Error;
+
+    public static String MessageType_Info;
+
+    public static String MessageType_Warning;
+
     public static String SelectItemsPage_Title;
 
     public static String Select_Server;
@@ -798,6 +804,8 @@ public class Messages extends NLS {
 
     public static String BuildValidationRuleExpression;
 
+    public static String cannotCreateSystemCategory;
+
     public static String GenerateJobXX_UrlString;
 
     public static String LoggingGetDocument_Desc1;
@@ -963,6 +971,8 @@ public class Messages extends NLS {
     public static String ConsistencyConflictt_Deployed;
 
     public static String ConsistencyConflictt_NotDeployed;
+
+    public static String shouldNotBeSystemRoleName;
 
     public static String UnableConnectToServer;
 

@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -146,7 +146,7 @@ public class RepositoryResourceUtil {
         } catch (Exception e) {
             log.debug(e.getMessage(), e);
             if (shell != null) {
-                String url = serverDef.getProtocol() + serverDef.getHost() + ":" + serverDef.getPort() //$NON-NLS-1$ 
+                String url = serverDef.getProtocol() + serverDef.getHost() + ":" + serverDef.getPort() //$NON-NLS-1$
                         + serverDef.getPath();
                 String title = Messages.bind(Messages.Server_cannot_connected, url);
                 MessageDialog.openError(shell, title, Messages.AbstractDataClusterAction_ConnectFailed);
@@ -390,7 +390,11 @@ public class RepositoryResourceUtil {
 
         String fileName = ResourceFilenameHelper.getExpectedFileName(property.getLabel(), property.getVersion()) + DOT
                 + (fileExtension != null ? fileExtension : ""); //$NON-NLS-1$
-        IFile file = folder.getFile(fileName);
+        if (type == IServerObjectRepositoryType.TYPE_WORKFLOW && exAdapter != null && fileExtension != null
+                && fileExtension.equals("conf")) { //$NON-NLS-1$
+            fileName = exAdapter.getWorkflowConfigFilename(item);
+        }
+        IFile file = fileName != null ? folder.getFile(fileName) : null;
         return file;
     }
 
@@ -409,6 +413,26 @@ public class RepositoryResourceUtil {
         }
 
         return objectFolder;
+    }
+
+    public static boolean isSystemViewObject(IRepositoryViewObject viewObj) {
+        if (viewObj.getProperty() != null && viewObj.getProperty().getItem() != null) {
+            return isSystemViewItem(viewObj.getProperty().getItem());
+        }
+
+        return false;
+    }
+
+    public static boolean isSystemViewItem(Item item) {
+        String path = item.getState().getPath();
+        if (path != null) {
+            path = path.toLowerCase();
+            if (path.startsWith("system") || path.startsWith("/system")) { //$NON-NLS-1$ //$NON-NLS-2$
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static boolean isSystemFolder(Item pItem, String folderName) {
@@ -1260,6 +1284,7 @@ public class RepositoryResourceUtil {
 
     private static IRunnableWithProgress initializeProcess = new IRunnableWithProgress() {
 
+        @Override
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
             try {
                 final ProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
@@ -1479,6 +1504,9 @@ public class RepositoryResourceUtil {
                     if (type == IServerObjectRepositoryType.TYPE_DATAMODEL) {
                         IFile xsdFile = findReferenceFile(type, item, "xsd"); //$NON-NLS-1$
                         return new Object[] { xsdFile, itemFile };
+                    } else if(type == IServerObjectRepositoryType.TYPE_WORKFLOW) {
+                        IFile configFile = findReferenceFile(type, item, "conf"); //$NON-NLS-1$
+                        return new Object[]{configFile};
                     } else {
                         return new Object[] { itemFile };
                     }

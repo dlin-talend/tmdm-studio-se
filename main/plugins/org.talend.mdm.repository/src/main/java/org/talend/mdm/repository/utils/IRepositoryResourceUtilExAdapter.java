@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -13,6 +13,7 @@
 package org.talend.mdm.repository.utils;
 
 import org.eclipse.ui.IEditorReference;
+import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.IRepositoryViewObject;
 
 import com.amalto.workbench.exadapter.IExAdapter;
@@ -24,4 +25,13 @@ import com.amalto.workbench.exadapter.IExAdapter;
 public interface IRepositoryResourceUtilExAdapter extends IExAdapter<RepositoryResourceUtil> {
 
     IEditorReference getOpenedWFEditor(IRepositoryViewObject viewObj, IEditorReference ref);
+
+    /**
+     * This method is only defined for importing workflow.<br><br>
+     * It relys on implementation of IProcessService to get config file name with file extension, which config file name is stored during workflow migration.<br>
+     * 
+     * <b>Runtime Exception</b> will be thrown when IProcessService implementation is not registered.<br>
+     * <b>Null</b> will be returned when there is no config file recorded during migration.
+     */
+    String getWorkflowConfigFilename(Item item);
 }

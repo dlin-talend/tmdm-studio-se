@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -367,37 +367,42 @@ public class RepositoryDropAssistant extends CommonDropAdapterAssistant {
         InputDialog dlg = new InputDialog(getShell(), Messages.RepositoryDropAssistant_pasteObject, Messages.Common_inputName,
                 initLabel, new IInputValidator() {
 
-            public String isValid(String newText) {
-                if (newText == null || newText.trim().length() == 0) {
-                    return Messages.Common_nameCanNotBeEmpty;
-                }
-                if (type.equals(IServerObjectRepositoryType.TYPE_TRANSFORMERV2)
-                        || type.equals(IServerObjectRepositoryType.TYPE_VIEW)) {
-                    if (type.equals(IServerObjectRepositoryType.TYPE_TRANSFORMERV2)) {
-                        if (newText.startsWith(ITransformerV2NodeConsDef.PREFIX_SMARTVIEW_UPPER)) {
-                            if (!ValidateUtil.matchSmartViewRegex(newText)) {
-                                return Messages.Common_nameInvalid;
-                            }
+                    @Override
+                    public String isValid(String newText) {
+                        if (newText == null || newText.trim().length() == 0) {
+                            return Messages.Common_nameCanNotBeEmpty;
                         }
 
-                        if (!ValidateUtil.matchViewProcessRegex(newText)) {
+                        if (type.equals(IServerObjectRepositoryType.TYPE_TRANSFORMERV2)) {
+                            if (newText.startsWith(ITransformerV2NodeConsDef.PREFIX_SMARTVIEW_UPPER)) {
+                                if (!ValidateUtil.matchSmartViewRegex(newText)) {
+                                    return Messages.Common_nameInvalid;
+                                }
+                            }
+
+                            if (!ValidateUtil.matchViewProcessRegex(newText)) {
+                                return Messages.Common_nameInvalid;
+                            }
+                        } else if (type.equals(IServerObjectRepositoryType.TYPE_VIEW)) {
+                            if (!ValidateUtil.matchViewProcessRegex(newText)) {
+                                return Messages.Common_nameInvalid;
+                            }
+                        } else if (type.equals(IServerObjectRepositoryType.TYPE_ROLE)) {
+                            if (!ValidateUtil.matchRoleRegex(newText)) {
+                                return Messages.Common_nameInvalid;
+                            } else if (ValidateUtil.isSystemRoleName(newText)) {
+                                return Messages.shouldNotBeSystemRoleName;
+                            }
+                        } else if (!ValidateUtil.matchCommonRegex(newText)) {
                             return Messages.Common_nameInvalid;
                         }
-                    } else if (type.equals(IServerObjectRepositoryType.TYPE_VIEW)) {
-                        if (!ValidateUtil.matchViewProcessRegex(newText)) {
-                            return Messages.Common_nameInvalid;
+                        //
+                        if (RepositoryResourceUtil.isExistByName(parentItem.getRepObjType(), newText.trim())) {
+                            return Messages.Common_nameIsUsed;
                         }
-                    }
-                } else if (!ValidateUtil.matchCommonRegex(newText)) {
-                    return Messages.Common_nameInvalid;
-                }
-                //
-                if (RepositoryResourceUtil.isExistByName(parentItem.getRepObjType(), newText.trim())) {
-                    return Messages.Common_nameIsUsed;
-                }
-                return null;
-            };
-        });
+                        return null;
+                    };
+                });
         dlg.setBlockOnOpen(true);
         if (dlg.open() == Window.CANCEL) {
             return null;
@@ -409,6 +414,7 @@ public class RepositoryDropAssistant extends CommonDropAdapterAssistant {
     private void refreshContainer(final IRepositoryViewObject viewObj) {
         Display.getDefault().asyncExec(new Runnable() {
 
+            @Override
             public void run() {
                 if (viewObj != null) {
                     try {

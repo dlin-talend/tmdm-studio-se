@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -574,6 +574,12 @@ public class Messages extends NLS {
     public static String Warning;
 
     public static String Warnning;
+
+    public static String WriteAccessAnnotationDialogExtender_AddAccess;
+
+    public static String WriteAccessAnnotationDialogExtender_RemoveAccess;
+
+    public static String WriteAccessAnnotationDialogExtender_Roles;
 
     public static String NotContainEmpty;
 
@@ -1793,7 +1799,11 @@ public class Messages extends NLS {
 
     public static String XSDTreeLabelProvider_28;
 
+    public static String XSDTreeLabelProvider_29;
+
     public static String XSDTreeLabelProvider_3;
+
+    public static String XSDTreeLabelProvider_30;
 
     public static String XSDTreeLabelProvider_4;
 
