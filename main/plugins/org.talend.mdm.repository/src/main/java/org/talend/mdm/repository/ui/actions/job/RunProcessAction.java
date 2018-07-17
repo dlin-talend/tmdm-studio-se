@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -43,7 +43,7 @@ public class RunProcessAction extends AbstractBridgeRepositoryAction {
     static class MDMRunProcess extends RunProcess {
 
         @Override
-        protected RepositoryNode getCurrentRepositoryNode() {
+        protected RepositoryNode initCurrentRepositoryNode() {
             ISelection selection = getSelection();
             if (selection == null || selection.isEmpty() || !(selection instanceof IStructuredSelection)) {
                 return null;

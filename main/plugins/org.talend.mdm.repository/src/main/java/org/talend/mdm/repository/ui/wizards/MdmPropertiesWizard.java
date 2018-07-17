@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -154,6 +154,7 @@ public class MdmPropertiesWizard extends PropertiesWizard {
                     if (imageCatalog != null) {
                         imageCatalog.addModifyListener(new ModifyListener() {
 
+                            @Override
                             public void modifyText(ModifyEvent e) {
                                 item.getResource().setImageCatalog(imageCatalog.getText());
                                 updatePageStatus();
@@ -203,6 +204,8 @@ public class MdmPropertiesWizard extends PropertiesWizard {
                         } else if (objectType.equals(IServerObjectRepositoryType.TYPE_ROLE)) {
                             if (!ValidateUtil.matchRoleRegex(newText)) {
                                 errorMsg = Messages.Common_nameInvalid;
+                            } else if (ValidateUtil.isSystemRoleName(newText)) {
+                                errorMsg = Messages.shouldNotBeSystemRoleName;
                             }
                         } else {
                             if (!ValidateUtil.matchCommonRegex(newText)) {

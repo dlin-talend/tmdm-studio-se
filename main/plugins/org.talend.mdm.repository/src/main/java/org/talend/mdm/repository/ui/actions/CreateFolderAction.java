@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -57,11 +57,15 @@ public class CreateFolderAction extends AbstractRepositoryAction {
             InputDialog dlg = new InputDialog(getShell(), Messages.CreateFolderAction_newCategory,
                     Messages.CreateFolderAction_inputCategoryName, null, new IInputValidator() {
 
+                        @Override
                         public String isValid(String newText) {
-                            if ((newText == null) || "".equals(newText)) {
+                            if ((newText == null) || "".equals(newText)) { //$NON-NLS-1$
                                 return Messages.Common_nameCanNotBeEmpty;
                             }
-                            Pattern p = Pattern.compile("([\\s*|\\W*]+)");//$NON-NLS-1$ 
+                            if(newText.equalsIgnoreCase("System")) { //$NON-NLS-1$
+                                return Messages.cannotCreateSystemCategory;
+                            }
+                            Pattern p = Pattern.compile("([\\s*|\\W*]+)");//$NON-NLS-1$
                             Matcher m = p.matcher(newText);
                             if (m.find()) {
                                 m.group(1);

@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -13,6 +13,8 @@
 package org.talend.mdm.repository.utils;
 
 import java.util.regex.Pattern;
+
+import org.talend.mdm.commmon.util.core.ICoreConstants;
 
 public class ValidateUtil {
 
@@ -49,7 +51,16 @@ public class ValidateUtil {
         String regex = "\\w(#|\\w)*";//$NON-NLS-1$
         String tailRegex = ".*\\w";//$NON-NLS-1$
 
-        return matches(regex, tailRegex, newText);
+        boolean matches = matches(regex, tailRegex, newText);
+        return matches;
+    }
+
+    public static boolean isSystemRoleName(String role) {
+        if (role.toLowerCase().startsWith(ICoreConstants.SYSTEM_ROLE_PREFIX.toLowerCase())
+                || role.equalsIgnoreCase(ICoreConstants.ADMIN_PERMISSION)) {
+            return true;
+        }
+        return false;
     }
 
     private static boolean matches(String regex, String tailRegex, String newText) {

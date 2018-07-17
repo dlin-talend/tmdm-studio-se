@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -245,6 +245,7 @@ public class RenameProcessAction extends AbstractRepositoryAction implements ITr
         if (validator == null) {
             validator = new IInputValidator() {
 
+                @Override
                 public String isValid(String newText) {
                     if (newText == null || newText.trim().length() == 0) {
                         return Messages.Common_nameCanNotBeEmpty;
@@ -274,10 +275,6 @@ public class RenameProcessAction extends AbstractRepositoryAction implements ITr
     @Override
     public boolean isVisible(IRepositoryViewObject viewObj) {
         if (getSelectedObject().size() == 1) {
-            String path = viewObj.getPath();
-            if (path != null && path.equalsIgnoreCase("system")) {//$NON-NLS-1$
-                return false;
-            }
             return true;
         }
         return false;

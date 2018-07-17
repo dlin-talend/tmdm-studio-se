@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -37,9 +37,10 @@ public class DisplayFormatCommitHandler extends LanguageInfoCommitHandler<Displa
 
         XSDAnnotationsStructure xsdAnnoStruct = getXSDAnnotationStruct();
 
-        LinkedHashMap<String, String> langCode2Value = new LinkedHashMap<String, String>();
-        for (Entry<String, LanguageInfo> eachLangCode2LangInfo : getCommitedObj().getLangCode2LangInfo().entrySet())
+        Map<String, String> langCode2Value = new LinkedHashMap<String, String>();
+        for (Entry<String, LanguageInfo> eachLangCode2LangInfo : getCommitedObj().getLangCode2LangInfo().entrySet()) {
             langCode2Value.put(eachLangCode2LangInfo.getKey(), eachLangCode2LangInfo.getValue().getLabel());
+        }
 
         return xsdAnnoStruct.setDisplayFormat(langCode2Value);
 

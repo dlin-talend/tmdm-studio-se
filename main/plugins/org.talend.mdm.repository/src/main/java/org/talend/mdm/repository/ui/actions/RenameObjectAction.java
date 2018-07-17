@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 import org.talend.commons.exception.LoginException;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -123,30 +124,39 @@ public class RenameObjectAction extends AbstractRepositoryAction {
 
     private String showRenameDlg(final ERepositoryObjectType type, final ContainerItem parentItem, final String originalName) {
 
-        InputDialog dlg = new InputDialog(getShell(), Messages.RenameObjectAction_rename, Messages.Common_rename, originalName,
-                new IInputValidator() {
-
-                    public String isValid(String newText) {
-                        if (newText == null || newText.trim().length() == 0) {
-                            return Messages.Common_nameCanNotBeEmpty;
-                        }
-
-                        if (type.equals(IServerObjectRepositoryType.TYPE_TRANSFORMERV2)
-                                || type.equals(IServerObjectRepositoryType.TYPE_VIEW)) {
-                            if (!ValidateUtil.matchViewProcessRegex(newText)) {
-                                return Messages.Common_nameInvalid;
-                            }
-                        } else if (!ValidateUtil.matchCommonRegex(newText)) {
-                            return Messages.Common_nameInvalid;
-                        }
-                        //
-                        if (RepositoryResourceUtil.isExistByName(parentItem.getRepObjType(), newText.trim())) {
-                            return Messages.Common_nameIsUsed;
-                        }
-                        return null;
-                    };
-                });
+        CustomInputDialog dlg = new CustomInputDialog(getShell(), Messages.RenameObjectAction_rename, Messages.Common_rename, originalName,
+                null);
         dlg.setBlockOnOpen(true);
+        dlg.create();
+        dlg.setValidator(new IInputValidator() {
+
+            @Override
+            public String isValid(String newText) {
+                if (newText == null || newText.trim().length() == 0) {
+                    return Messages.Common_nameCanNotBeEmpty;
+                }
+
+                if (type.equals(IServerObjectRepositoryType.TYPE_TRANSFORMERV2)
+                        || type.equals(IServerObjectRepositoryType.TYPE_VIEW)) {
+                    if (!ValidateUtil.matchViewProcessRegex(newText)) {
+                        return Messages.Common_nameInvalid;
+                    }
+                } else if (type.equals(IServerObjectRepositoryType.TYPE_ROLE)) {
+                    if (!ValidateUtil.matchRoleRegex(newText)) {
+                        return Messages.Common_nameInvalid;
+                    } else if (ValidateUtil.isSystemRoleName(newText)) {
+                        return Messages.shouldNotBeSystemRoleName;
+                    }
+                } else if (!ValidateUtil.matchCommonRegex(newText)) {
+                    return Messages.Common_nameInvalid;
+                }
+                //
+                if (RepositoryResourceUtil.isExistByName(parentItem.getRepObjType(), newText.trim())) {
+                    return Messages.Common_nameIsUsed;
+                }
+                return null;
+            };
+        });
         if (dlg.open() == Window.CANCEL) {
             return null;
         }
@@ -157,12 +167,40 @@ public class RenameObjectAction extends AbstractRepositoryAction {
     @Override
     public boolean isVisible(IRepositoryViewObject viewObj) {
         if (getSelectedObject().size() == 1) {
-            String path = viewObj.getPath();
-            if (path != null && path.equalsIgnoreCase("system")) {//$NON-NLS-1$
+            if (RepositoryResourceUtil.isSystemViewObject(viewObj)) {
                 return false;
             }
             return true;
         }
         return false;
+    }
+
+    class CustomInputDialog extends InputDialog {
+
+        private IInputValidator validator;
+        public CustomInputDialog(Shell parentShell, String dialogTitle, String dialogMessage, String initialValue,
+                IInputValidator validator) {
+            super(parentShell, dialogTitle, dialogMessage, initialValue, validator);
+            this.validator = validator;
+        }
+
+        @Override
+        protected void validateInput() {
+            String errorMessage = null;
+            if (getValidator() != null) {
+                errorMessage = getValidator().isValid(getText().getText());
+            }
+            setErrorMessage(errorMessage);
+        }
+
+        public void setValidator(IInputValidator validator) {
+            this.validator = validator;
+            validateInput();
+        }
+
+        @Override
+        protected IInputValidator getValidator() {
+            return validator;
+        }
     }
 }
